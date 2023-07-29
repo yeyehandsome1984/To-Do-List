@@ -12,34 +12,40 @@ let innerHtmlEl = "";
 
 //cursor settings
 
-const cursorEl = document.querySelector(".cursor")
+const cursorEl = document.querySelector(".cursor");
 
-document.addEventListener("mousemove", cursorMoveHandler)
-function cursorMoveHandler (e) {
-  cursorEl.style.top = e.clientY + "px"
-  cursorEl.style.left = e.clientX + "px"
+document.addEventListener("mousemove", cursorMoveHandler);
+function cursorMoveHandler(e) {
+  cursorEl.style.top = e.clientY + "px";
+  cursorEl.style.left = e.clientX + "px";
 }
 
-containerEl.addEventListener("mouseover", containeMouseEnterHandler)
+containerEl.addEventListener("mouseover", containeMouseEnterHandler);
 
 function containeMouseEnterHandler(event) {
-
   if (event.target.closest("li") || event.target.closest(".input--container")) {
-    cursorEl.classList.add("hide-cursor")
+    cursorEl.classList.add("hide-cursor");
   } else {
-    cursorEl.classList.add("focus")
+    cursorEl.classList.add("focus");
   }
-
 }
 
-containerEl.addEventListener("mouseout", containeMouseLeaveHandler)
+containerEl.addEventListener("mouseout", containeMouseLeaveHandler);
 
 function containeMouseLeaveHandler() {
   cursorEl.classList.remove("focus");
-  cursorEl.classList.remove("hide-cursor")
+  cursorEl.classList.remove("hide-cursor");
 }
 
+titleEl.addEventListener("mouseover", titleElMouseOverHandler);
+function titleElMouseOverHandler() {
+  cursorEl.classList.add("title-cursor");
+}
 
+titleEl.addEventListener("mouseout", titleElMouseOutHandler);
+function titleElMouseOutHandler() {
+  cursorEl.classList.remove("title-cursor");
+}
 
 // input listener
 inputEl.addEventListener("input", inputHandler);
@@ -83,12 +89,14 @@ function addBtnClickHandler(event) {
   inputEl.value = "";
 }
 
-
 // note click listener
 tasksContainerEl.addEventListener("click", tasksContainerClickHandler);
 
 function tasksContainerClickHandler(event) {
-  if (event.target.closest("li").tagName === "LI" || event.target.classList.contains("radio--btn")) {
+  if (
+    event.target.closest("li").tagName === "LI" ||
+    event.target.classList.contains("radio--btn")
+  ) {
     event.target.closest("li").classList.toggle("checked");
 
     if (event.target.closest("li").classList.contains("checked")) {
@@ -109,7 +117,7 @@ function tasksContainerClickHandler(event) {
 tasksContainerEl.addEventListener("click", delBtnClickHandler);
 
 function delBtnClickHandler(event) {
-  console.log()
+  console.log();
   if (event.target.closest(".trash--btn")) {
     if (!event.target.closest("li").classList.contains("checked")) {
       taskCountEl.textContent = (+taskCountEl.textContent - 1).toString();
@@ -128,5 +136,3 @@ function sAdder() {
     sSymb.textContent = "";
   }
 }
-
-
