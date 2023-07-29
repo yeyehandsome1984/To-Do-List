@@ -21,17 +21,52 @@ a {
   text-decoration: none;
   color: inherit;
 }
+/* Cursor */
+.cursor {
+  position: absolute;
+  
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  background: linear-gradient(-129deg, #e240ff 0%, #ffaf0e 90.86%);
+  
+  transform: translate(10%, -100%);
+  transition: top .15s, left .15s,
+  width .2s, height .2s;
+  transition-timing-function: ease-out;
+
+  z-index: 50;
+}
+
+
+.cursor.focus {
+  width: 13px;
+  height: 13px;
+  transition: top .2s, left .2s,
+  width .2s, height .2s;
+  transition-timing-function: ease-out;
+}
+
+.cursor.hide-cursor {
+  width: 0px;
+  height: 0px;
+} 
+
+
 
 /* Container */
 
 body {
   position: relative;
-
+  height: 100vh;
   /* background-image: url(../pics/background-img.png);
   background-size: cover;
   background-attachment: fixed; */
   background-color: #fff;
-  height: 100vh;
+
+  font-style: normal;
+  font-size: 16px;
 }
 
 .container {
@@ -43,7 +78,7 @@ body {
 
   padding: 94px 104px 50px;
   width: 740px;
-  height: 70vh;
+  height: 100vh;
 
   background: #fff;
   box-shadow: 21px 18px 90px 0px rgba(0, 0, 0, 0.1);
@@ -51,16 +86,15 @@ body {
 
 /* content */
 .title {
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+
+  color: #14142b;
 
   font-feature-settings: "clig" off, "liga" off;
-  font-size: 36px;
-  font-style: normal;
+  font-size: 30px;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -1.5px;
-
-  color: #14142b;
 }
 
 /* Input */
@@ -69,34 +103,26 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 
   border-radius: 14px;
-  background-color: #eaeaea;
+  background-color: #E2E2E2;
 }
 
 #input {
   flex: 1;
+  padding: 11px 20px;
+  
   border: none;
   outline: none;
-
   background: transparent;
-  padding: 11px 20px;
 
   font-size: 16px;
-  font-style: normal;
   font-weight: 500;
   line-height: 1.75;
   letter-spacing: 0.75px;
 }
 
-#input::placeholder {
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 1.75;
-  letter-spacing: 0.75px;
-}
 
 .input--button {
   box-sizing: border-box;
@@ -107,13 +133,12 @@ body {
   padding: 11px 50px;
 
   border-radius: 14px;
-  background-color: #fff;
+  background-color: #E2E2E2;
 
-  color: #000;
+  color: #222222;
   background: linear-gradient(159deg, #eb72ff 0%, #f5bc4c 90.86%);
 
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
   line-height: 1.75;
   letter-spacing: 0.75px;
@@ -122,7 +147,7 @@ body {
 }
 
 .input--button:hover {
-  background: linear-gradient(159deg, #000000 0%, #000000 90.86%);
+  background: linear-gradient(159deg, #222222 0%, #222222 90.86%);
   color: #fff;
 }
 
@@ -131,15 +156,14 @@ body {
   margin-bottom: 10px;
 
   color: #696969;
-  font-size: 16px;
-  font-style: normal;
+  
   font-weight: 500;
   line-height: 1.75;
   letter-spacing: 0.75px;
 }
 
 .tasks--count {
-  color: #000;
+  color: #222222;
 
   font-size: 18px;
   font-weight: 700;
@@ -158,16 +182,14 @@ body {
   padding: 18px 28px 18px 75px;
   margin-bottom: 10px;
   position: relative;
-
   width: 100%;
+
   border-radius: 17px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #E2E2E2;
+  color: #222;
 
   cursor: pointer;
 
-  color: #222;
-  font-size: 16px;
-  font-style: normal;
   font-weight: 500;
   line-height: 1.75;
   letter-spacing: 0px;
@@ -179,8 +201,8 @@ body {
 .task--item:hover {
   border: 1px solid #222222;
   background-color: #222222;
-  color: #e7e7e7;
-  fill: #e7e7e7;
+  color: #E2E2E2;
+  fill: #E2E2E2;
 }
 
 .task--item:last-of-type {
@@ -195,12 +217,13 @@ body {
   transform: translateY(-50%);
 
   fill: none;
+  stroke: #E2E2E2;
+
   transition: color 1000ms cubic-bezier(0.4, 0, 0.2, 1);
-  stroke: #eaeaea;
 }
 
 .task--item:hover .radio--btn {
-  color: #000;
+  color: #222222;
 }
 
 .trash--btn {
@@ -225,30 +248,35 @@ body {
 
 .task--item.checked .radio--btn {
   stroke: #222;
+  color: #222;
 }
 
 .task--item.checked::before {
   opacity: 1;
 }
 .task--item::before {
+  box-sizing: border-box;
   content: "";
   position: absolute;
   top: 50%;
   left: 28px;
   transform: translateY(-50%);
+
   width: 26px;
   height: 26px;
 
   border-radius: 50%;
+  border: 1px solid #222;
   background-image: url(../pics/radio-icon-checked.png);
-  background-size: contain;
-
+  background-size: cover;
+  
+ 
   opacity: 0;
 }
 
 /* Deleted tasks */
 
-.completed--tasks--container {
+/* .completed--tasks--container {
   position: relative;
   bottom: 0;
   margin-left: auto;
@@ -256,7 +284,6 @@ body {
 
   width: 100%;
   min-height: 30vh;
-  /* max-height: 30vh; */
 
   padding: 24px 94px;
   width: 740px;
@@ -306,4 +333,4 @@ body {
   width: 100%;
 
   list-style: none;
-}
+} */

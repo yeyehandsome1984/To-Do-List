@@ -4,17 +4,49 @@ const addBtnEl = document.querySelector(".input--button");
 const taskCountEl = document.querySelector(".tasks--count");
 const tasksContainerEl = document.querySelector(".tasks--container");
 const sSymb = document.querySelector(".to--add--s");
+const titleEl = document.querySelector(".title");
 
 taskCountEl.textContent = "0";
 let notesText = "";
 let innerHtmlEl = "";
 
+//cursor settings
+
+const cursorEl = document.querySelector(".cursor")
+
+document.addEventListener("mousemove", cursorMoveHandler)
+function cursorMoveHandler (e) {
+  cursorEl.style.top = e.clientY + "px"
+  cursorEl.style.left = e.clientX + "px"
+}
+
+containerEl.addEventListener("mouseover", containeMouseEnterHandler)
+
+function containeMouseEnterHandler(event) {
+
+  if (event.target.closest("li") || event.target.closest(".input--container")) {
+    cursorEl.classList.add("hide-cursor")
+  } else {
+    cursorEl.classList.add("focus")
+  }
+
+}
+
+containerEl.addEventListener("mouseout", containeMouseLeaveHandler)
+
+function containeMouseLeaveHandler() {
+  cursorEl.classList.remove("focus");
+  cursorEl.classList.remove("hide-cursor")
+}
+
+
+
 // input listener
 inputEl.addEventListener("input", inputHandler);
 
 function inputHandler(event) {
-  if (event.currentTarget.value.trim().length > 30) {
-    window.alert("Maximum symbols - 30");
+  if (event.currentTarget.value.trim().length > 50) {
+    window.alert("Maximum symbols - 50");
     return;
   }
   notesText = event.currentTarget.value.trim();
@@ -51,19 +83,20 @@ function addBtnClickHandler(event) {
   inputEl.value = "";
 }
 
+
 // note click listener
 tasksContainerEl.addEventListener("click", tasksContainerClickHandler);
 
 function tasksContainerClickHandler(event) {
-  if (event.target.tagName === "LI") {
-    event.target.classList.toggle("checked");
+  if (event.target.closest("li").tagName === "LI" || event.target.classList.contains("radio--btn")) {
+    event.target.closest("li").classList.toggle("checked");
 
-    if (event.target.classList.contains("checked")) {
+    if (event.target.closest("li").classList.contains("checked")) {
       taskCountEl.textContent = (+taskCountEl.textContent - 1).toString();
     }
     if (
-      event.target.tagName === "LI" &&
-      !event.target.classList.contains("checked")
+      event.target.closest("li").tagName === "LI" &&
+      !event.target.closest("li").classList.contains("checked")
     ) {
       taskCountEl.textContent = (+taskCountEl.textContent + 1).toString();
     }
@@ -76,7 +109,8 @@ function tasksContainerClickHandler(event) {
 tasksContainerEl.addEventListener("click", delBtnClickHandler);
 
 function delBtnClickHandler(event) {
-  if (event.target.tagName === "svg" || event.target.tagName === "use") {
+  console.log()
+  if (event.target.closest(".trash--btn")) {
     if (!event.target.closest("li").classList.contains("checked")) {
       taskCountEl.textContent = (+taskCountEl.textContent - 1).toString();
     }
@@ -86,7 +120,7 @@ function delBtnClickHandler(event) {
   sAdder();
 }
 
-//checks if tasts count ===1
+//checks if tasks count ===1
 function sAdder() {
   if (+taskCountEl.textContent !== 1) {
     sSymb.textContent = "s";
@@ -94,3 +128,5 @@ function sAdder() {
     sSymb.textContent = "";
   }
 }
+
+
