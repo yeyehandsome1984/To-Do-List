@@ -1,34 +1,31 @@
 const containerEl = document.querySelector(".container");
-const inputEl = document.querySelector("#input")
-const addBtnEl = document.querySelector(".input--button")
-const taskCountEl = document.querySelector(".tasks--count")
-const tasksContainerEl = document.querySelector(".tasks--container") 
-const sSymb = document.querySelector(".to--add--s") 
+const inputEl = document.querySelector("#input");
+const addBtnEl = document.querySelector(".input--button");
+const taskCountEl = document.querySelector(".tasks--count");
+const tasksContainerEl = document.querySelector(".tasks--container");
+const sSymb = document.querySelector(".to--add--s");
 
-
-taskCountEl.textContent = "0"
+taskCountEl.textContent = "0";
 let notesText = "";
-let innerHtmlEl = ""
-
+let innerHtmlEl = "";
 
 // input listener
-inputEl.addEventListener('input', inputHandler)
+inputEl.addEventListener("input", inputHandler);
 
-function inputHandler (event) {
-  if (event.currentTarget.value.trim().length > 66 ) {
-   window.alert("Maximum symbols - 66")
+function inputHandler(event) {
+  if (event.currentTarget.value.trim().length > 30) {
+    window.alert("Maximum symbols - 30");
+    return;
   }
-  notesText = event.currentTarget.value.trim()
-
+  notesText = event.currentTarget.value.trim();
 }
 
-
 // btn listener
-addBtnEl.addEventListener('click', addBtnClickHandler)
+addBtnEl.addEventListener("click", addBtnClickHandler);
 
-function addBtnClickHandler (event) {
+function addBtnClickHandler(event) {
   if (inputEl.value.trim().length < 1) {
-    window.alert("Enter min 1 symbol")
+    window.alert("Enter min 1 symbol");
   } else {
     innerHtmlEl = `
     <li class="task--item">
@@ -41,68 +38,59 @@ function addBtnClickHandler (event) {
     </li>`;
     tasksContainerEl.insertAdjacentHTML("afterbegin", innerHtmlEl);
 
-    taskCountEl.textContent = (tasksContainerEl.children.length - [...tasksContainerEl.children].filter(el => [...el.classList].includes("checked")).length).toString() ;
+    taskCountEl.textContent = (
+      tasksContainerEl.children.length -
+      [...tasksContainerEl.children].filter((el) =>
+        [...el.classList].includes("checked")
+      ).length
+    ).toString();
 
     sAdder();
-   
   }
 
-  inputEl.value = ""
-
+  inputEl.value = "";
 }
 
-
 // note click listener
-tasksContainerEl.addEventListener("click", tasksContainerClickHandler)
+tasksContainerEl.addEventListener("click", tasksContainerClickHandler);
 
-function tasksContainerClickHandler (event) {
+function tasksContainerClickHandler(event) {
   if (event.target.tagName === "LI") {
-    event.target.classList.toggle("checked")
+    event.target.classList.toggle("checked");
 
     if (event.target.classList.contains("checked")) {
       taskCountEl.textContent = (+taskCountEl.textContent - 1).toString();
-    
     }
-    if (event.target.tagName === "LI" && !event.target.classList.contains("checked")) {
+    if (
+      event.target.tagName === "LI" &&
+      !event.target.classList.contains("checked")
+    ) {
       taskCountEl.textContent = (+taskCountEl.textContent + 1).toString();
-     
     }
-  
   }
 
   sAdder();
-
-
 }
-
 
 // delete btn listener
-tasksContainerEl.addEventListener("click", delBtnClickHandler)
+tasksContainerEl.addEventListener("click", delBtnClickHandler);
 
-function delBtnClickHandler (event) {
-  if (event.target.tagName === "svg" || event.target.tagName === "use" ) {
+function delBtnClickHandler(event) {
+  if (event.target.tagName === "svg" || event.target.tagName === "use") {
     if (!event.target.closest("li").classList.contains("checked")) {
-      taskCountEl.textContent = (+taskCountEl.textContent - 1).toString()
-    
+      taskCountEl.textContent = (+taskCountEl.textContent - 1).toString();
     }
     event.target.closest("li").remove();
-   
-    
   }
 
-  sAdder()
-
+  sAdder();
 }
 
-//checks if tasts count ===1 
-function sAdder () {
-  if(+taskCountEl.textContent !== 1) {
-    sSymb.textContent = "s"
+//checks if tasts count ===1
+function sAdder() {
+  if (+taskCountEl.textContent !== 1) {
+    sSymb.textContent = "s";
   } else {
-    sSymb.textContent = ""
+    sSymb.textContent = "";
   }
 }
-
-
-
-
