@@ -96,7 +96,6 @@ body {
   transform: translateY(-50%); 
 
   padding: 94px 104px 50px;
-  /* width: 740px; */
   width: 70%;
   max-width: 740px;
   min-width: 400px;
@@ -274,10 +273,8 @@ body {
 }
 .task-text-container {
   width: calc(100% - 30px);
-  /* overflow: hidden; */
 
   word-wrap: break-word;
-  /* text-overflow: ellipsis; */
 }
 .radio-btn {
   content: "";
